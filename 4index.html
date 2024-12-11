@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روزةكان</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background-color: #f9f9f9;
+            text-align: right;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .container {
+            margin: 20px;
+        }
+        .month-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100px;
+        }
+        .month-button:hover {
+            background-color: #45a049;
+        }
+        .day-content {
+            display: none;
+            margin-top: 20px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .student-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .student-name {
+            width: 150px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        .status-input {
+            width: 50px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        .button-group button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .red { background-color: red; color: white; }
+        .blue { background-color: blue; color: white; }
+        .yellow { background-color: yellow; }
+        .button-group button:hover {
+            opacity: 0.8;
+        }
+        #goToPage3 {
+            background-color: #ff6347;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #goToPage3:hover {
+            background-color: #e55347;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>روزةكان</h1>
+    <button id="goToPage3" onclick="goToPage3()">كةرانةوة </button>
+    
+    <!-- الأزرار الخاصة بالأيام -->
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+        <button class="month-button" onclick="showDayContent(1)">يوم 1</button>
+        <button class="month-button" onclick="showDayContent(2)">يوم 2</button>
+        <button class="month-button" onclick="showDayContent(3)">يوم 3</button>
+        <button class="month-button" onclick="showDayContent(4)">يوم 4</button>
+        <button class="month-button" onclick="showDayContent(5)">يوم 5</button>
+        <button class="month-button" onclick="showDayContent(6)">يوم 6</button>
+        <button class="month-button" onclick="showDayContent(7)">يوم 7</button>
+        <button class="month-button" onclick="showDayContent(8)">يوم 8</button>
+        <button class="month-button" onclick="showDayContent(9)">يوم 9</button>
+        <button class="month-button" onclick="showDayContent(10)">يوم 10</button>
+        <button class="month-button" onclick="showDayContent(11)">يوم 11</button>
+        <button class="month-button" onclick="showDayContent(12)">يوم 12</button>
+        <button class="month-button" onclick="showDayContent(13)">يوم 13</button>
+        <button class="month-button" onclick="showDayContent(14)">يوم 14</button>
+        <button class="month-button" onclick="showDayContent(15)">يوم 15</button>
+        <button class="month-button" onclick="showDayContent(16)">يوم 16</button>
+        <button class="month-button" onclick="showDayContent(17)">يوم 17</button>
+        <button class="month-button" onclick="showDayContent(18)">يوم 18</button>
+        <button class="month-button" onclick="showDayContent(19)">يوم 19</button>
+        <button class="month-button" onclick="showDayContent(20)">يوم 20</button>
+        <button class="month-button" onclick="showDayContent(21)">يوم 21</button>
+        <button class="month-button" onclick="showDayContent(22)">يوم 22</button>
+        <button class="month-button" onclick="showDayContent(23)">يوم 23</button>
+        <button class="month-button" onclick="showDayContent(24)">يوم 24</button>
+        <button class="month-button" onclick="showDayContent(25)">يوم 25</button>
+        <button class="month-button" onclick="showDayContent(26)">يوم 26</button>
+        <button class="month-button" onclick="showDayContent(27)">يوم 27</button>
+        <button class="month-button" onclick="showDayContent(28)">يوم 28</button>
+        <button class="month-button" onclick="showDayContent(29)">يوم 29</button>
+        <button class="month-button" onclick="showDayContent(30)">يوم 30</button>
+        <button class="month-button" onclick="showDayContent(31)">يوم 31</button>
+    </div>
+
+    <!-- محتوى اليوم -->
+    <div id="dayContent" class="day-content">
+        <h2>محتوى يوم <span id="dayNumber"></span></h2>
+        <div id="studentsContainer">
+            <!-- سيتم إضافة الخلايا هنا عبر الجافا سكربت -->
+        </div>
+        <button id="saveToExcel" onclick="saveToExcel()">حفظ البيانات إلى Excel</button>
+    </div>
+</div>
+
+<script>
+    function showDayContent(day) {
+        document.getElementById('dayNumber').textContent = day;
+        const studentsContainer = document.getElementById('studentsContainer');
+        studentsContainer.innerHTML = ''; // إعادة تعيين المحتوى
+
+        // إضافة 40 خانة لكل يوم
+        for (let i = 0; i < 40; i++) {
+            const studentRow = document.createElement('div');
+            studentRow.className = 'student-row';
+
+            const studentNameInput = document.createElement('input');
+            studentNameInput.className = 'student-name';
+            studentNameInput.placeholder = 'اسم الطالب';
+
+            const statusInput = document.createElement('input');
+            statusInput.className = 'status-input';
+            statusInput.placeholder = 'غ/ح/م';
+
+            const buttonGroup = document.createElement('div');
+            buttonGroup.className = 'button-group';
+
+            const redButton = document.createElement('button');
+            redButton.className = 'red';
+            redButton.textContent = 'غ';
+            redButton.onclick = () => statusInput.value = 'غ';
+
+            const blueButton = document.createElement('button');
+            blueButton.className = 'blue';
+            blueButton.textContent = 'ح';
+            blueButton.onclick = () => statusInput.value = 'ح';
+
+            const yellowButton = document.createElement('button');
+            yellowButton.className = 'yellow';
+            yellowButton.textContent = 'م';
+            yellowButton.onclick = () => statusInput.value = 'م';
+
+            buttonGroup.appendChild(redButton);
+            buttonGroup.appendChild(blueButton);
+            buttonGroup.appendChild(yellowButton);
+
+            studentRow.appendChild(studentNameInput);
+            studentRow.appendChild(statusInput);
+            studentRow.appendChild(buttonGroup);
+            studentsContainer.appendChild(studentRow);
+        }
+
+        document.getElementById('dayContent').style.display = 'block';
+    }
+
+    function saveToExcel() {
+        const ws_data = [];
+        
+        // إضافة عناوين الأعمدة
+        ws_data.push(["الاسم", "الحالة"]);
+
+        // جمع البيانات
+        const students = document.querySelectorAll('#studentsContainer .student-row');
+        students.forEach((row) => {
+            const name = row.querySelector('input').value;
+            const status = row.querySelector('input').value;
+
+            ws_data.push([name, status]);
+        });
+
+        // تحويل البيانات إلى ورقة Excel
+        const ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+        // إنشاء مصنف
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "البيانات");
+
+        // حفظ الملف
+        XLSX.writeFile(wb, "الطلاب.xlsx");
+    }
+
+    function goToPage3() {
+        window.location.href = 'page3.html'; // تأكد من رابط الصفحة الثالثة
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حفظ البيانات في Excel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            margin: 20px;
+        }
+        .save-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .save-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>حفظ البيانات في ملف Excel</h1>
+
+    <!-- نموذج لبيانات الطلاب -->
+    <table id="dataTable" border="1" style="margin: auto;">
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>أحمد</td>
+                <td>غ</td>
+            </tr>
+            <tr>
+                <td>محمد</td>
+                <td>ح</td>
+            </tr>
+            <tr>
+                <td>سارة</td>
+                <td>م</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="save-button" onclick="saveToExcel()">حفظ البيانات إلى Excel</button>
+</div>
+
+<script>
+    function saveToExcel() {
+        // الحصول على البيانات من جدول HTML
+        var table = document.getElementById("dataTable");
+        var wb = XLSX.utils.table_to_book(table, {sheet: "الطلاب"});
+
+        // تحويل البيانات إلى ملف Excel وتحميله
+        XLSX.writeFile(wb, "الطلاب.xlsx");
+    }
+</script>
+
+</body>
+</html>
